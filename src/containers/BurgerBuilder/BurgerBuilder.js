@@ -10,7 +10,8 @@ const INGREDIENT_PRICES = {
   salad: 0.5,
   cheese: 0.4,
   meat: 1.3,
-  bacon: 0.7
+  bacon: 0.7,
+  tomato: 0.2,
 };
 
 class BurgerBuilder extends Component {
@@ -23,11 +24,12 @@ class BurgerBuilder extends Component {
       salad: 0,
       bacon: 0,
       cheese: 0,
-      meat: 0
+      meat: 0,
+      tomato: 0,
     },
-    totalPrice: 4,
+    totalPrice: 0,
     purchasable: false,
-    purchasing: false
+    purchasing: false,
   };
 
   updatePurchaseState(ingredients) {
@@ -45,7 +47,7 @@ class BurgerBuilder extends Component {
     const oldCount = this.state.ingredients[type];
     const updatedCount = oldCount + 1;
     const updatedIngredients = {
-      ...this.state.ingredients
+      ...this.state.ingredients,
     };
     updatedIngredients[type] = updatedCount;
     const priceAddition = INGREDIENT_PRICES[type];
@@ -62,7 +64,7 @@ class BurgerBuilder extends Component {
     }
     const updatedCount = oldCount - 1;
     const updatedIngredients = {
-      ...this.state.ingredients
+      ...this.state.ingredients,
     };
     updatedIngredients[type] = updatedCount;
     const priceDeduction = INGREDIENT_PRICES[type];
@@ -86,7 +88,7 @@ class BurgerBuilder extends Component {
 
   render() {
     const disabledInfo = {
-      ...this.state.ingredients
+      ...this.state.ingredients,
     };
     for (let key in disabledInfo) {
       disabledInfo[key] = disabledInfo[key] <= 0;
