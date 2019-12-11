@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Order from "../../components/Order/Order";
-import axios from "../../axios-orders"
+import axios from "../../axios-orders";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler"
 
 export class Orders extends Component {
     state = {
@@ -18,7 +19,7 @@ export class Orders extends Component {
                         id: key
                     })
                 }
-                this.setState({ loading: false })
+                this.setState({ loading: false, orders: fetchedOrders })
             })
             .catch(error => {
                 this.setState({ loading: false })
@@ -27,11 +28,12 @@ export class Orders extends Component {
     render() {
         return (
             <div>
-                <Order />
-                <Order />
+                {this.state.orders.map(order => (
+                    <Order key={order.id} />
+                ))}
             </div>
         )
     }
 }
 
-export default Orders
+export default withErrorHandler(Orders, axios)
